@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manhwa List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="reader.js"></script>
+
+</head>
+<body class="bg-gray-900 text-white">
+
+    <header class="text-center py-6 bg-gray-800 shadow-lg">
+        <h1 class="text-3xl font-bold">📚 Manhwa Collection</h1>
+        <div>
+            <a href="solo.html" class="text-2xl font-bold hover:text-gray-400   ">Home</a>
+        </div>
+        
+    </header>
+    <div class="relative w-1/2 mx-auto mt-4">
+        <div class="flex bg-gray-700 rounded items-center px-2">
+            <input id="searchInput" type="text" placeholder="Search manga..."
+                class="w-full bg-gray-700 text-white px-3 py-2 rounded focus:outline-none"
+                oninput="showSuggestions()" onkeydown="handleEnter(event)">
+            <button onclick="searchManga()" class="p-2">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png" alt="Search" class="w-5 h-5">
+            </button>
+        </div>
+        <div id="suggestionBox"
+            class="absolute left-0 w-full bg-gray-800 text-white shadow-lg rounded hidden mt-1 max-h-60 overflow-y-auto"></div>
+    </div>
+    
+    
+    
+    
+
+    <div class="container mx-auto px-6 py-8">
+        <div id="manga-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto max-h-[80vh] p-2">
+            <p class="text-gray-400">Loading manga...</p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchManga() {
+            try {
+                console.log("📢 Fetching ALL Manga...");
+                const response = await fetch("/api/manga");
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const mangaList = await response.json();
+                console.log(`📜 Full Manga List (${mangaList.length} manga):`, mangaList);
+
+                const mangaListContainer = document.getElementById("manga-list");
+                mangaListContainer.innerHTML = ""; // Clear previous data
+
+                mangaList.forEach(manga => {
+                    const mangaItem = document.createElement("div");
+                    mangaItem.classList.add(
+                        "bg-gray-800", "p-4", "rounded-lg", "shadow-lg",
+                        "text-center", "cursor-pointer", "transition", "hover:scale-105"
+                    );
+
+                    mangaItem.innerHTML = `
+                        <img src="${manga.coverURL}" alt="${manga.title}" class="w-full h-52 object-cover rounded-lg mb-2">
+                        <h2 class="text-lg font-semibold">${manga.title}</h2>
+                        <p class="text-gray-300 text-sm">📖 ${manga.latestChapters.join(", ")}</p>
+                        <button onclick="openReader('${manga.id}')" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    Read Now
+</button>
+
+                    `;
+
+                    mangaListContainer.appendChild(mangaItem);
+                });
+
+            } catch (error) {
+                console.error("❌ Error fetching manga:", error);
+            }
+        }
+
+        function openReader(mangaId) {
+            window.location.href = `details.html?manhwa=${mangaId}`;
+        }
+
+        fetchManga();
+    </script>
+
+</body>
+</html>

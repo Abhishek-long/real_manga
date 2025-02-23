@@ -115,3 +115,77 @@ function jumpToChapter() {
 
 // ✅ Fetch chapters on page load
 fetchChapters();
+let mangaList = [];
+
+async function preloadManga() {
+    try {
+        const response = await fetch('/api/manga');
+        if (!response.ok) throw new Error('Failed to fetch manga list');
+        mangaList = await response.json();
+        console.log("✅ Manga data loaded:", mangaList);
+    } catch (error) {
+        console.error('❌ Error fetching manga:', error);
+    }
+}
+
+
+async function showSuggestions() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const suggestionBox = document.getElementById('suggestionBox');
+    suggestionBox.innerHTML = '';
+
+    if (query.length < 3) {
+        suggestionBox.classList.add('hidden');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/search?q=${query}`);
+        const results = await response.json();
+
+        if (results.length > 0) {
+            suggestionBox.classList.remove('hidden');
+            results.forEach(manga => {
+                let item = document.createElement('div');
+                item.classList.add('p-2', 'hover:bg-gray-700', 'cursor-pointer', 'flex', 'items-center');
+                item.innerHTML = `
+                    <img src="${manga.coverURL}" alt="${manga.title}" class="w-10 h-10 mr-2 rounded">
+                    <span>${manga.title}</span>
+                `;
+                item.onclick = () => {
+                    window.location.href = `details.html?manhwa=${manga.id}`;
+                };
+                suggestionBox.appendChild(item);
+            });
+        } else {
+            suggestionBox.classList.add('hidden');
+        }
+    } catch (error) {
+        console.error("❌ Error fetching search results:", error);
+    }
+}
+
+
+
+// Handle search when pressing "Enter" or clicking search button
+function searchManga() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const foundManga = mangaList.find(manga => manga.title.toLowerCase() === query);
+
+    if (foundManga) {
+    window.location.href = `details.html?manhwa=${foundManga.id}`;
+}
+else {
+        alert("❌ Manhwa not found! Please try a different title.");
+    }
+}
+
+// Listen for Enter key press in search bar
+document.getElementById("searchInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        searchManga();
+    }
+});
+
+// Load manga data when the page loads
+document.addEventListener("DOMContentLoaded", preloadManga);

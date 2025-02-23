@@ -63,3 +63,4 @@ function openReader(manhwaId) {
 
 // Load manga list on page load
 fetchManhwa();
+

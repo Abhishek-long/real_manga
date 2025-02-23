@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <header class="text-center py-6 bg-gray-800 shadow-lg">
+        <h1 class="text-3xl font-bold">📖 Manhwa Details</h1>
+        <div>
+            <a href="solo.html" class="text-2xl font-bold hover:text-gray-400   ">Home</a>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 py-8">
+        <!-- Manga Info -->
+        <div id="manga-info" class="flex flex-col items-center text-center">
+            <img id="manga-cover" class="w-40 h-60 rounded shadow-lg" alt="Manga Cover">
+            <h2 id="manga-title" class="text-2xl font-bold mt-4"></h2>
+            <p id="manga-description" class="text-gray-400 mt-2 max-w-xl"></p>
+
+            <!-- Extra Details -->
+            <div class="mt-4 text-lg space-y-2">
+                <p>📌 **Alternative Titles:** <span id="manga-alternative">Loading...</span></p>
+                <p>📅 **Publication Year:** <span id="manga-year">Loading...</span></p>
+                <p>✍ **Author(s):** <span id="manga-authors">Loading...</span></p>
+                <p>📖 **Status:** <span id="manga-status">Loading...</span></p>
+                <p>🔖 **Genres:** <span id="manga-genres">Loading...</span></p>
+                <p>📅 **Last Updated:** <span id="manga-updated">Loading...</span></p>
+                <p>⭐ **Rating:** <span id="manga-rating">Loading...</span> / 10</p>
+                <p>💬 **Reviews:** <span id="manga-reviews">Loading...</span> Reviews</p>
+                <p>📚 **Total Chapters:** <span id="manga-total-chapters">Loading...</span></p>
+            </div>
+        </div>
+
+        <!-- Chapter List -->
+        <h3 class="text-xl font-semibold mt-6">📚 Chapters</h3>
+        <div id="chapter-list" class="mt-4 bg-gray-800 p-4 rounded-lg shadow-lg max-h-[60vh] overflow-y-auto">
+            <p class="text-gray-400">Loading chapters...</p>
+        </div>
+    </div>
+
+    <script defer src="details.js"></script>
+</body>
+</html>

@@ -5,12 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manhwa Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        async function searchChapter() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!query) return;
+            
+            try {
+                const response = await fetch('/api/manga');
+                if (!response.ok) throw new Error('Failed to fetch manga list');
+                
+                const mangaList = await response.json();
+                const matchedManga = mangaList.find(manga => manga.title.toLowerCase().includes(query));
+                
+                if (matchedManga) {
+                    window.location.href = `reader.html?manhwa=${matchedManga.id}`;
+                } else {
+                    alert('No matching manga found');
+                }
+            } catch (error) {
+                console.error('Error searching manga:', error);
+            }
+        }
+    </script>
 </head>
 <body class="bg-gray-900 text-white text-center">
-
-    <header class="py-6 bg-gray-800 shadow-lg">
-        <h1 id="manhwa-title" class="text-3xl font-bold">📖 Manhwa Reader</h1>
-    </header>
+    <div class="bg-gray-800 text-white py-4 px-6 flex justify-between items-center shadow-lg">
+        <a href="solo.html" class="text-2xl font-bold hover:text-gray-400">🏠 Home</a>
+    </div>
+    
+    <div class="relative w-1/2 mx-auto mt-4">
+        <div class="flex bg-gray-700 rounded items-center px-2">
+            <input id="searchInput" type="text" placeholder="Search manga..."
+                class="w-full bg-gray-700 text-white px-3 py-2 rounded focus:outline-none"
+                oninput="showSuggestions()" onkeydown="handleEnter(event)">
+            <button onclick="searchManga()" class="p-2">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png" alt="Search" class="w-5 h-5">
+            </button>
+        </div>
+        <div id="suggestionBox"
+            class="absolute left-0 w-full bg-gray-800 text-white shadow-lg rounded hidden mt-1 max-h-60 overflow-y-auto"></div>
+    </div>
+    
+    
+    
 
     <!-- Chapter Selection -->
     <div class="container mx-auto px-6 py-6">
