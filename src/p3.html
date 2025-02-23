@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1 class="text-3xl font-bold text-center mb-8">
+        Tailwind CSS Z-Index Example
+      </h1>
+
+      <div class="relative h-64">
+        <div
+          class="relative top-0 left-0 w-40 h-40 bg-blue-500 z-10 flex items-center justify-center">
+          <p class="text-white font-bold">Box 1 (z-10)</p>
+        </div>
+
+        <div
+          class="absolute top-10 left-10 w-40 h-40 bg-red-500 z-20 flex items-center justify-center"
+        >
+          <p class="text-white font-bold">Box 2 (z-20)</p>
+        </div>
+
+        <div
+          class="absolute top-20 left-20 w-40 h-40 bg-green-500 z-20 flex items-center justify-center"
+        >
+          <p class="text-white font-bold">Box 2 (z-20)</p>
+        </div>
+      </div>
+
+      <div class="relative h-64">
+        <div
+          class="absolute top-0 left-0 w-20 h-20 bg-blue-500 z-0 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">1</p>
+        </div>
+        <div
+          class="absolute top-0 left-20 w-20 h-20 bg-red-500 z-10 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">2</p>
+        </div>
+        <div
+          class="absolute top-0 left-40 w-20 h-20 bg-green-500 z-20 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">3</p>
+        </div>
+        <div
+          class="absolute top-0 left-60 w-20 h-20 bg-orange-500 z-30 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">4</p>
+        </div>
+        <div
+          class="absolute top-0 left-80 w-20 h-20 bg-amber-500 z-30 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">5</p>
+        </div>
+      </div>
+
+      <div class="relative h-64">
+        <div
+          class="absolute top-0 left-0 w-20 h-20 bg-blue-500 z-0 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">1</p>
+        </div>
+        <div
+          class="absolute  top-6 left-16 w-20 h-20 bg-red-500 z-10 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">2</p>
+        </div>
+        <div
+          class="absolute top-0 left-32 w-20 h-20 bg-green-500 z-20 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">3</p>
+        </div>
+        <div
+          class="absolute top-6 left-48 w-20 h-20 bg-orange-500 z-30 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">4</p>
+        </div>
+        <div
+          class="absolute top-0 left-64 w-20 h-20 bg-amber-500 z-30 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">5</p>
+        </div>
+        <div
+          class="absolute top-6 left-80 w-20 h-20 bg-cyan-900 z-30 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">5</p>
+        </div>
+        <div
+          class="absolute top-0 left-64 w-20 h-20 bg-emerald-800 z-30 rounded-full flex items-center justify-center"
+        >
+          <p class="text-white font-bold">5</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
