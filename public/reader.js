@@ -57,7 +57,7 @@ async function loadChapter(chapterId) {
 
     try {
         console.log(`📖 Loading Chapter ${chapterId}...`);
-        const response = await fetch(`https://api.mangadex.org/at-home/server/${chapterId}`);
+        const response = await fetch(`/api/chapter/${chapterId}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
