@@ -6,7 +6,7 @@ let currentChapter = urlParams.get("chapter");
 async function fetchChapters() {
     try {
         console.log(`📢 Fetching chapters for manga ID: ${mangaId}...`);
-        const response = await fetch(`https://api.mangadex.org/manga/${mangaId}/aggregate?translatedLanguage[]=en`);
+        const response = await fetch(`/api/manga/${mangaId}/chapters`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

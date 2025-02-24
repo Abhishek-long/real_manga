@@ -39,6 +39,7 @@ app.get("/api/manga", async (req, res) => {
             };
         });
 
+
         res.json(mangaList);
     } catch (error) {
         console.error("❌ Error fetching manga:", error.message);
@@ -132,6 +133,7 @@ app.get("/proxy-cover/:mangaId/:filename", async (req, res) => {
         res.status(500).send("Error fetching cover image");
     }
 });
+
 
 
 // ✅ Start Server
