@@ -15,29 +15,13 @@
         </div>
     </header>
 
-    <!-- Search Box -->
-    <div class="relative w-1/2 mx-auto mt-4">
-        <div class="flex bg-gray-700 rounded items-center px-2">
-            <input id="searchInput" type="text" placeholder="Search manga..."
-                class="w-full bg-gray-700 text-white px-3 py-2 rounded focus:outline-none"
-                oninput="showSuggestions()" onkeydown="handleEnter(event)">
-            <button onclick="searchManga()" class="p-2">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png" alt="Search" class="w-5 h-5">
-            </button>
-        </div>
-        <div id="suggestionBox"
-            class="absolute left-0 w-full bg-gray-800 text-white shadow-lg rounded hidden mt-1 max-h-60 overflow-y-auto"></div>
-    </div>
-
-    <!-- Manga List -->
     <div class="container mx-auto px-6 py-8">
-        <div id="manga-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto max-h-[80vh] p-2">
+        <div id="manga-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-2">
             <p class="text-gray-400">Loading manga...</p>
         </div>
     </div>
 
     <script>
-        // ✅ Fetch Manga List from API
         async function fetchManga() {
             try {
                 console.log("📢 Fetching ALL Manga...");
@@ -63,9 +47,6 @@
                     mangaItem.innerHTML = `
                         <img src="${manga.coverURL}" alt="${manga.title}" class="w-full h-52 object-cover rounded-lg mb-2">
                         <h2 class="text-lg font-semibold">${manga.title}</h2>
-                        <p class="text-gray-300 text-sm">
-                            📖 ${manga.latestChapters ? manga.latestChapters.join(", ") : "No chapters available"}
-                        </p>
                         <button onclick="openReader('${manga.id}')" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                             Read Now
                         </button>
@@ -76,17 +57,15 @@
 
             } catch (error) {
                 console.error("❌ Error fetching manga:", error);
-                document.getElementById("manga-list").innerHTML = "<p class='text-red-500'>Failed to load manga.</p>";
+                document.getElementById("manga-list").innerHTML = `<p class="text-red-500">Failed to load manga.</p>`;
             }
         }
 
-        // ✅ Open Manga Details Page
         function openReader(mangaId) {
             window.location.href = `details.html?manhwa=${mangaId}`;
         }
 
-        // ✅ Run fetchManga when the page loads
-        document.addEventListener("DOMContentLoaded", fetchManga);
+        fetchManga();
     </script>
 
 </body>

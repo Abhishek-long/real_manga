@@ -53,9 +53,8 @@ async function fetchMangaDetails() {
         // ✅ Fix Cover Image Using Proxy
         const coverRel = manga.relationships.find(rel => rel.type === "cover_art");
         const coverFilename = coverRel?.attributes?.fileName;
-        document.getElementById("manga-cover").src = coverFilename 
-            ? `/proxy-cover/${manga.id}/${coverFilename}`
-            : "https://placehold.co/150x220?text=No+Cover";
+        document.getElementById("manga-cover").src = `/proxy-cover/${manga.id}/${coverFilename}`;
+
 
         // ✅ Fetch Rating and Review Count
         fetchMangaStats(mangaId);

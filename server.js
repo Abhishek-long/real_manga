@@ -19,7 +19,7 @@ app.get("/api/manga", async (req, res) => {
     try {
         console.log("📢 Fetching ALL manga from MangaDex...");
 
-        const response = await fetch("https://api.mangadex.org/manga?limit=50&includes[]=cover_art&availableTranslatedLanguage[]=en");
+        const response = await fetch("https://api.mangadex.org/manga?limit=100&includes[]=cover_art&availableTranslatedLanguage[]=en");
         if (!response.ok) throw new Error(`MangaDex API Error: ${response.status}`);
 
         const data = await response.json();
@@ -28,8 +28,9 @@ app.get("/api/manga", async (req, res) => {
             const coverRel = manga.relationships.find(rel => rel.type === "cover_art");
             const coverFilename = coverRel?.attributes?.fileName;
             const coverURL = coverFilename
-                ? `https://uploads.mangadex.org/covers/${manga.id}/${coverFilename}.256.jpg`
-                : "https://placehold.co/150x220?text=No+Cover";
+    ? `/proxy-cover/${manga.id}/${coverFilename}`
+    : "https://placehold.co/150x220?text=No+Cover";
+
 
             return {
                 id: manga.id,
@@ -114,6 +115,24 @@ app.get("/proxy-image/:hash/:filename", async (req, res) => {
         res.status(500).send("Error fetching image");
     }
 });
+app.get("/proxy-cover/:mangaId/:filename", async (req, res) => {
+    try {
+        const { mangaId, filename } = req.params;
+        const imageUrl = `https://uploads.mangadex.org/covers/${mangaId}/${filename}.256.jpg`;
+
+        console.log(`📢 Proxying cover image: ${imageUrl}`);
+
+        const response = await fetch(imageUrl, { headers: { "Referer": "https://mangadex.org/" } });
+        if (!response.ok) throw new Error("Failed to fetch cover image");
+
+        res.set("Content-Type", response.headers.get("content-type"));
+        response.body.pipe(res);
+    } catch (error) {
+        console.error("❌ Error fetching cover image:", error);
+        res.status(500).send("Error fetching cover image");
+    }
+});
+
 
 // ✅ Start Server
 app.listen(PORT, () => {
