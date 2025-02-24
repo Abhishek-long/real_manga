@@ -7,6 +7,7 @@ async function fetchMangaDetails() {
         console.log(`📢 Fetching details for Manga ID: ${mangaId}`);
         const response = await fetch(`/api/manga/${mangaId}`);
 
+
         if (!response.ok) throw new Error("Failed to fetch manga details");
 
         const data = await response.json();

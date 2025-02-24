@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manhwa Reader</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         async function searchChapter() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -26,44 +27,87 @@
                 console.error('Error searching manga:', error);
             }
         }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                searchChapter();
+            }
+        }
+
+        async function showSuggestions() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const suggestionBox = document.getElementById('suggestionBox');
+            suggestionBox.innerHTML = '';
+
+            if (query.length < 3) {
+                suggestionBox.classList.add('hidden');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/search?q=${query}`);
+                const results = await response.json();
+
+                if (results.length > 0) {
+                    suggestionBox.classList.remove('hidden');
+                    results.forEach(manga => {
+                        let item = document.createElement('div');
+                        item.classList.add('p-2', 'hover:bg-gray-700', 'cursor-pointer', 'flex', 'items-center');
+                        item.innerHTML = `
+                            <img src="${manga.coverURL}" alt="${manga.title}" class="w-10 h-10 mr-2 rounded">
+                            <span>${manga.title}</span>
+                        `;
+                        item.onclick = () => {
+                            window.location.href = `details.html?manhwa=${manga.id}`;
+                        };
+                        suggestionBox.appendChild(item);
+                    });
+                } else {
+                    suggestionBox.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error("❌ Error fetching search results:", error);
+            }
+        }
     </script>
 </head>
 <body class="bg-gray-900 text-white text-center">
+    <!-- 🔹 Header -->
     <div class="bg-gray-800 text-white py-4 px-6 flex justify-between items-center shadow-lg">
         <a href="solo.html" class="text-2xl font-bold hover:text-gray-400">🏠 Home</a>
     </div>
     
+    <!-- 🔹 Search Box -->
     <div class="relative w-1/2 mx-auto mt-4">
         <div class="flex bg-gray-700 rounded items-center px-2">
             <input id="searchInput" type="text" placeholder="Search manga..."
                 class="w-full bg-gray-700 text-white px-3 py-2 rounded focus:outline-none"
                 oninput="showSuggestions()" onkeydown="handleEnter(event)">
-            <button onclick="searchManga()" class="p-2">
+            <button onclick="searchChapter()" class="p-2">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png" alt="Search" class="w-5 h-5">
             </button>
         </div>
         <div id="suggestionBox"
             class="absolute left-0 w-full bg-gray-800 text-white shadow-lg rounded hidden mt-1 max-h-60 overflow-y-auto"></div>
     </div>
-    
-    
-    
 
-    <!-- Chapter Selection -->
+    <!-- 🔹 Chapter Selection -->
     <div class="container mx-auto px-6 py-6">
         <div class="flex justify-center items-center mb-4">
-            <label for="chapterSelect" class="mr-3">Select Chapter:</label>
-            <select id="chapterSelect" class="bg-gray-700 text-white p-2 rounded" onchange="jumpToChapter()"></select>
+            <label for="chapterSelect" class="mr-3">📚 Select Chapter:</label>
+            <select id="chapterSelect" class="bg-gray-700 text-white p-2 rounded" onchange="jumpToChapter()">
+                <option>Loading...</option>
+            </select>
         </div>
 
-        <!-- Reader Container (for pages) -->
+        <!-- 🔹 Reader Container (for pages) -->
         <div class="reader mx-auto max-w-3xl">
             <div id="reader-container" class="space-y-4">
                 <p class="text-gray-400">Loading pages...</p>
             </div>
         </div>
 
-        <!-- Navigation Buttons -->
+        <!-- 🔹 Navigation Buttons -->
         <div class="flex justify-between mt-6">
             <button onclick="prevChapter()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">◀ Previous</button>
             <button onclick="nextChapter()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Next ▶</button>
