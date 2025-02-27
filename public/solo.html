@@ -26,47 +26,58 @@
             try {
                 console.log("📢 Fetching ALL Manga...");
                 const response = await fetch("/api/manga");
-
+    
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-
+    
                 const mangaList = await response.json();
                 console.log(`📜 Full Manga List (${mangaList.length} manga):`, mangaList);
-
+    
                 const mangaListContainer = document.getElementById("manga-list");
                 mangaListContainer.innerHTML = ""; // Clear previous data
-
+    
                 mangaList.forEach(manga => {
                     const mangaItem = document.createElement("div");
                     mangaItem.classList.add(
                         "bg-gray-800", "p-4", "rounded-lg", "shadow-lg",
                         "text-center", "cursor-pointer", "transition", "hover:scale-105"
                     );
-
+    
                     mangaItem.innerHTML = `
-                        <img src="${manga.coverURL}" alt="${manga.title}" class="w-full h-52 object-cover rounded-lg mb-2">
-                        <h2 class="text-lg font-semibold">${manga.title}</h2>
-                        <button onclick="openReader('${manga.id}')" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <button onclick="openReader('${manga.id}')" >
+                        <a href="#" onclick="openReader('${manga.id}')" class="block">
+                            <img src="${manga.coverURL}" alt="${manga.title}" class="w-full h-52 object-cover rounded-lg mb-2">
+                            <h2 class="text-lg font-semibold">${manga.title}</h2>
+                        </a>
+                        <p class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                             Read Now
+                            </p>
                         </button>
                     `;
-
+    
                     mangaListContainer.appendChild(mangaItem);
                 });
-
+    
             } catch (error) {
                 console.error("❌ Error fetching manga:", error);
                 document.getElementById("manga-list").innerHTML = `<p class="text-red-500">Failed to load manga.</p>`;
             }
         }
-
+    
         function openReader(mangaId) {
-            window.location.href = `details.html?manhwa=${mangaId}`;
+            // Open the ad link first
+            window.open("https://www.effectiveratecpm.com/se7wve16?key=3df6575c23595c02eaee5f6f8d99f476", "_blank");
+    
+            // Redirect to manga reader page after a short delay
+            setTimeout(() => {
+                window.location.href = `details.html?manhwa=${mangaId}`;
+            }, 1000); // Adjust delay if needed
         }
-
+    
         fetchManga();
     </script>
+    
 
 </body>
 </html>
