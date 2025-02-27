@@ -72,49 +72,53 @@
     </script>
 </head>
 <body class="bg-gray-900 text-white text-center">
-    <!-- 🔹 Header -->
-    <div class="bg-gray-800 text-white py-4 px-6 flex justify-between items-center shadow-lg">
+    <!-- 🔹 Fixed Header with Navigation -->
+    <div class="bg-gray-800 text-white py-4 px-6 flex justify-between items-center shadow-lg fixed top-0 left-0 w-full z-50">
         <a href="solo.html" class="text-2xl font-bold hover:text-gray-400">🏠 Home</a>
-    </div>
-    
-    <!-- 🔹 Search Box -->
-    <div class="relative w-1/2 mx-auto mt-4">
-        <div class="flex bg-gray-700 rounded items-center px-2">
-            <input id="searchInput" type="text" placeholder="Search manga..."
-                class="w-full bg-gray-700 text-white px-3 py-2 rounded focus:outline-none"
-                oninput="showSuggestions()" onkeydown="handleEnter(event)">
-            <button onclick="searchChapter()" class="p-2">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png" alt="Search" class="w-5 h-5">
-            </button>
-        </div>
-        <div id="suggestionBox"
-            class="absolute left-0 w-full bg-gray-800 text-white shadow-lg rounded hidden mt-1 max-h-60 overflow-y-auto"></div>
-    </div>
-
-    <!-- 🔹 Chapter Selection -->
-    <div class="container mx-auto px-6 py-6">
-        <div class="flex justify-center items-center mb-4">
-            <label for="chapterSelect" class="mr-3">📚 Select Chapter:</label>
-            <select id="chapterSelect" class="bg-gray-700 text-white p-2 rounded" onchange="jumpToChapter()">
-                <option>Loading...</option>
-            </select>
-        </div>
-
-        <!-- 🔹 Reader Container (for pages) -->
-        <div class="reader mx-auto max-w-3xl">
-            <div id="reader-container" class="space-y-4">
-                <p class="text-gray-400">Loading pages...</p>
-            </div>
-        </div>
-
-        <!-- 🔹 Navigation Buttons -->
-        <div class="flex justify-between mt-6">
+        
+        <!-- Navigation Buttons -->
+        <div class="flex items-center gap-4">
             <button onclick="prevChapter()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">◀ Previous</button>
+            <span id="chapterCounter" class="text-lg font-bold"></span>
             <button onclick="nextChapter()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Next ▶</button>
         </div>
     </div>
 
-    <script defer src="reader.js"></script>
+    <!-- Add padding to avoid content being hidden under the fixed header -->
+    <div class="mt-20">
+        <!-- 🔹 Search Box -->
+        <div class="relative w-1/2 mx-auto mt-4">
+            <div class="flex bg-gray-700 rounded items-center px-2">
+                <input id="searchInput" type="text" placeholder="Search manga..."
+                    class="w-full bg-gray-700 text-white px-3 py-2 rounded focus:outline-none"
+                    oninput="showSuggestions()" onkeydown="handleEnter(event)">
+                <button onclick="searchChapter()" class="p-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png" alt="Search" class="w-5 h-5">
+                </button>
+            </div>
+            <div id="suggestionBox"
+                class="absolute left-0 w-full bg-gray-800 text-white shadow-lg rounded hidden mt-1 max-h-60 overflow-y-auto"></div>
+        </div>
 
+        <!-- 🔹 Chapter Selection -->
+        <div class="container mx-auto px-6 py-6">
+            <div class="flex justify-center items-center mb-4">
+                <label for="chapterSelect" class="mr-3">📚 Select Chapter:</label>
+                <select id="chapterSelect" class="bg-gray-700 text-white p-2 rounded" onchange="jumpToChapter()">
+                    <option>Loading...</option>
+                </select>
+            </div>
+
+            <!-- 🔹 Reader Container (for pages) -->
+            <div class="reader mx-auto max-w-3xl">
+                <div id="reader-container" class="space-y-4">
+                    <p class="text-gray-400">Loading pages...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script defer src="reader.js"></script>
 </body>
+
 </html>
