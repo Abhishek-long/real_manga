@@ -72,17 +72,25 @@
     </script>
 </head>
 <body class="bg-gray-900 text-white text-center">
-    <!-- 🔹 Fixed Header with Navigation -->
-    <div class="bg-gray-800 text-white py-4 px-6 flex justify-between items-center shadow-lg fixed top-0 left-0 w-full z-50">
-        <a href="solo.html" class="text-2xl font-bold hover:text-gray-400">🏠 Home</a>
-        
-        <!-- Navigation Buttons -->
+    <header class="flex items-center py-4 px-6 bg-gray-800 shadow-lg">
+  <a href="solo.html" class="flex items-center font-bold text-white hover:text-gray-400">
+
+    <img src="https://static.vecteezy.com/system/resources/previews/023/552/814/non_2x/anime-minimalist-and-flat-logo-illustration-vector.jpg" 
+         alt="Otakunest Logo" class="h-12 mr-3">
+
+    <span class="text-3xl font-bold transition duration-300 ease-in-out hover:text-gray-400">
+        Otakunest
+    </span>
+</a>
+
+        <div class="ml-auto">
+ </div>
         <div class="flex items-center gap-4">
             <button onclick="prevChapter()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">◀ Previous</button>
             <span id="chapterCounter" class="text-lg font-bold"></span>
             <button onclick="nextChapter()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Next ▶</button>
         </div>
-    </div>
+    </header>
 
     <!-- Add padding to avoid content being hidden under the fixed header -->
     <div class="mt-20">
