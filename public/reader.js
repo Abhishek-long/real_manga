@@ -92,9 +92,19 @@ function nextChapter() {
 
     if (nextIndex < chapterSelect.options.length) {
         let nextChapterId = chapterSelect.options[nextIndex].value;
-        window.location.href = `reader.html?manhwa=${mangaId}&chapter=${nextChapterId}`;
+
+        // Open the ad link in a new tab
+        window.open("https://www.effectiveratecpm.com/se7wve16?key=3df6575c23595c02eaee5f6f8d99f476", "_blank");
+
+        // Redirect to the next chapter after a delay (e.g., 3 seconds)
+        setTimeout(() => {
+            window.location.href = `reader.html?manhwa=${mangaId}&chapter=${nextChapterId}`;
+        }, 3000);
+    } else {
+        alert("No more chapters available!");
     }
 }
+
 
 // ✅ Load Previous Chapter
 function prevChapter() {
